@@ -1,0 +1,26 @@
+.active {
+
+}
+
+.nav-item {
+    position: relative;
+}
+
+.active::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    height: 4px;
+    bottom: -15px;
+    left:0;
+    background: rgb(0, 68, 255);
+}
+
+.bgChange {
+    transition: backgroundColor 2s
+}
+
+.get-method {
+    color: rgb(255, 174, 0);
+}
