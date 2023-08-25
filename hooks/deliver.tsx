@@ -29,7 +29,6 @@ export default async function useDeliver() {
     }
 
     const deleteTokenById = async (id: string) => {
-        console.log(`Delete token by id: ${id}`)
         const { data } = await deliverInstance.delete(`/user/token/${id}`)
         return data
     }

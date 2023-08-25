@@ -25,6 +25,10 @@ export default function RootLayout({
               colorText: "#A8A8A8",
               colorTextHeading: "#A8A8A8",
               colorBgContainer: "#1B1D1E"
+            },
+            Message: {
+              colorText: "#FFFFFF",
+              contentBg: "#292929",
             }
           }
         }}

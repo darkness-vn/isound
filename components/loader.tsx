@@ -25,7 +25,6 @@ const Loader:FC<Props> = ({ timeout, onError, onErrorRedirectPath, onSuccess, on
                         let snap = await getDoc(doc(store, 'users', credential?.uid))
     
                         if (snap.exists()) {
-                            console.log(snap.data())
                             // set user data
                         }
     

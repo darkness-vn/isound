@@ -3,6 +3,7 @@ import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth"
 import { auth, googleProvider, store } from "@/firebase/init"
 import { useRouter } from "next/navigation"
 import Input from "@/components/input"
+import { message } from "antd"
 import PublicRoute from "@/hooks/publicRouter"
 import { FC, FormEvent, useState } from "react"
 import { AiOutlineMail, AiOutlineLock, AiFillApple } from "react-icons/ai"
@@ -20,26 +21,16 @@ const LoginContainer: FC<Props> = (props) => {
     const router = useRouter()
     const [email, $email] = useState<string>("")
     const [password, $password] = useState<string>("")
-
-    const handleRegister = async (e: FormEvent) => {
-        e.preventDefault()
-        console.log(email, password)
-        const res = await createUserWithEmailAndPassword(auth, email, password)
-        const user = res.user
-        console.log(user)
-    }
-
+    const [messageApi, contextHolder] = message.useMessage()
     const loginWithGoogle = async () => {
         try {
             const res = await signInWithPopup(auth, googleProvider)
             const user = res.user
-            console.log(user)
-
             const docRef = doc(store, "users", user.uid)
             const docSnap = await getDoc(docRef)
 
             if (docSnap.exists()) {
-                console.log(`user da ton tai`)
+                console.log(`-----`)
             } else {
                 const userData = {
                     _id: user.uid,
@@ -50,21 +41,23 @@ const LoginContainer: FC<Props> = (props) => {
                 await setDoc(doc(store, 'users', user.uid), userData)
             }
             router.push("/home")
-            // const token = await user.getIdToken()
-            // console.log(`idToken`, token)
-            // const tokenResult = await user.getIdTokenResult()
-            // console.log(`tokenResult`, tokenResult)
         } catch (error) {
             console.log(error)
+            messageApi
+                .open({
+                    type: 'error',
+                    // @ts-ignore
+                    content: error.message,
+                })
         }
     }
 
     const getAuth = () => {
         const data = auth.currentUser
-        console.log(data)
     }
 
     return <div style={{ backgroundImage: "url(/isound-bg.jpg)" }} className="bg-cover page flex justify-center items-center">
+        {contextHolder}
         <div className="rounded-xl bg-black bg-opacity-60">
 
             <div className="px-8 py-6">

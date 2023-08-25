@@ -17,7 +17,7 @@ const Header: FC<Props> = () => {
     const transition = () => {
         if (window.scrollY > 150) {
             // set style for header
-            setHeaderStyles("bg-sky-600")
+            setHeaderStyles("bg-sky-600 px-10")
         } else {
             setHeaderStyles("bg-none")
         }

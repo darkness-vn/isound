@@ -10,7 +10,7 @@ import PrivateRoute from '@/hooks/privateRoute'
 import { auth } from '@/firebase/init'
 
 const onChange = (checkedValues: CheckboxValueType[]) => {
-    console.log('checked = ', checkedValues)
+    
 }
 
 const free_options = [
@@ -45,7 +45,7 @@ function CreateTokenContainer() {
     const handleCreateAPIToken = async () => {
         try {
             const idToken = await auth.currentUser?.getIdToken()
-            console.log(idToken)
+
             const {data} = await axios.post("https://isound.cyclic.cloud/user/token/create-api-token", {
                 tokenName,
                 idToken,

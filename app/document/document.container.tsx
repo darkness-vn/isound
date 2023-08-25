@@ -39,27 +39,47 @@ const DocumentContainer: FC<Props> = (props) => {
 
         <div className="w-full bg-black h-[600px] p-20">
             <h1 className="mb-6 text-3xl font-bold underline underline-offset-8">API document</h1>
+            
+            <h1 className="mb-6 text-2xl">Official API: 
+                <span className="text-sky-600"> https://isound.cyclic.cloud</span>
+            </h1>
+
             <section className="space-y-3 mb-6">
                 <code className="text-2xl"><span className="get-method">[GET]</span> /media/info/:mediaID?token=YOUR_TOKEN</code>
+                <p>Usage: Get media infomation (ex: title, author, channel, ...)</p>
                 <p>Params:</p>
                 <p>* mediaId: {"{ type: string, required: true, description: 'Youtube video/audio id' }"}</p>
                 <p>* token: {"{ type: string, required: true, description: 'Your api token, can be created in dashboard' }"}</p>
-            
+
                 <p>Example:</p>
                 <code className="bg-red-500 px-2">
-                    {`const { data } = await axios.get('/media/info/HZaShvbm8Q0?token=YOUR_TOKEN')`}
+                    {`const { data } = await axios.get('https://isound.cyclic.cloud/media/info/HZaShvbm8Q0?token=YOUR_TOKEN')`}
                 </code>
             </section>
 
             <section className="space-y-3 mb-6">
                 <code className="text-2xl"><span className="get-method">[GET]</span> /media/play/:mediaID?token=YOUR_TOKEN</code>
+                <p>Usage: Convert video from youtube to audio and play (can be download)</p>
                 <p>Params:</p>
                 <p>* mediaId: {"{ type: string, required: true, description: 'Youtube video/audio id' }"}</p>
                 <p>* token: {"{ type: string, required: true, description: 'Your api token, can be created in dashboard' }"}</p>
-            
+
                 <p>Example:</p>
                 <code className="bg-red-500 px-2">
-                    {`const { data } = await axios.get('/media/play/HZaShvbm8Q0?token=YOUR_TOKEN')`}
+                    {`const { data } = await axios.get('https://isound.cyclic.cloud/media/play/HZaShvbm8Q0?token=YOUR_TOKEN')`}
+                </code>
+            </section>
+
+            <section className="space-y-3 mb-6">
+                <code className="text-2xl"><span className="get-method">[GET]</span> /?token=YOUR_TOKEN</code>
+                <p>Usage: Get home feeds (from youtube music), you can set your language and location</p>
+                <p>Params:</p>
+                <p>* token: {"{ type: string, required: true, description: 'Your api token, can be created in dashboard' }"}</p>
+                <p>* lang: {"{ type: string, description: 'Set language (see Lang code from google)' }"}</p>
+                <p>* location: {"{ type: string, description: 'Set location (see Location code from google)' }"}</p>
+                <p>Example:</p>
+                <code className="bg-red-500 px-2">
+                    {`const { data } = await axios.get('https://isound.cyclic.cloud/?token=YOUR_TOKEN')`}
                 </code>
             </section>
         </div>
