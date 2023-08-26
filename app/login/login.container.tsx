@@ -12,6 +12,7 @@ import { BsFacebook } from "react-icons/bs"
 import Logo from "@/components/logo"
 import RegisterForm from "@/components/auth/register"
 import { doc, getDoc, setDoc } from "firebase/firestore"
+import LoginForm from "@/components/auth/login"
 
 interface Props {
 
@@ -67,17 +68,7 @@ const LoginContainer: FC<Props> = (props) => {
 
             <div className="flex px-8 py-6 bg-white bg-opacity-60 justify-between space-x-12">
                 <RegisterForm />
-                <div className="login">
-                    <p className="text-lg font-semibold">Login</p>
-                    <small>Đăng nhập với tài khoản, mật khẩu</small>
-                    <form className="mt-4 flex flex-col space-y-3">
-                        <Input icon={<AiOutlineMail />} placeholder="Email" />
-                        <Input icon={<AiOutlineLock />} type="password" placeholder="Password" />
-                        <button className="drop-shadow-xl shadow-lg text-center w-full py-2 rounded-lg bg-green-500">
-                            Đăng nhập
-                        </button>
-                    </form>
-                </div>
+                <LoginForm />
             </div>
 
             <div className="w-full py-1 space-x-3 bg-white bg-opacity-60 flex justify-center items-center">
