@@ -8,9 +8,10 @@ import { AiOutlineLeft } from "react-icons/ai"
 import Input from '@/components/input'
 import PrivateRoute from '@/hooks/privateRoute'
 import { auth } from '@/firebase/init'
+import useDeliver from '@/hooks/deliver'
 
 const onChange = (checkedValues: CheckboxValueType[]) => {
-    
+
 }
 
 const free_options = [
@@ -44,13 +45,8 @@ function CreateTokenContainer() {
 
     const handleCreateAPIToken = async () => {
         try {
-            const idToken = await auth.currentUser?.getIdToken()
-
-            const {data} = await axios.post("https://isound.cyclic.cloud/user/token/create-api-token", {
-                tokenName,
-                idToken,
-                accessToken: 'hello world'
-            })
+            const { generateToken } = await useDeliver()
+            await generateToken({ tokenName })
             router.push("/dashboard")
         } catch (err) {
 

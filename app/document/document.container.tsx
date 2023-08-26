@@ -39,8 +39,8 @@ const DocumentContainer: FC<Props> = (props) => {
 
         <div className="w-full bg-black h-[600px] p-20">
             <h1 className="mb-6 text-3xl font-bold underline underline-offset-8">API document</h1>
-            
-            <h1 className="mb-6 text-2xl">Official API: 
+
+            <h1 className="mb-6 text-2xl">Official API:
                 <span className="text-sky-600"> https://isound.cyclic.cloud</span>
             </h1>
 
@@ -81,6 +81,22 @@ const DocumentContainer: FC<Props> = (props) => {
                 <code className="bg-red-500 px-2">
                     {`const { data } = await axios.get('https://isound.cyclic.cloud/?token=YOUR_TOKEN')`}
                 </code>
+            </section>
+
+            <section className="space-y-3 mb-6">
+                <code className="text-2xl"><span className="get-method">[GET]</span> /media/lyric/:mediaID?token=YOUR_TOKEN</code>
+                <p>Usage: Get lyric from media</p>
+                <p>Params:</p>
+                <p>* token: {"{ type: string, required: true, description: 'Your api token, can be created in dashboard' }"}</p>
+                <p>* mediaID: {"{ type: string, required: true, description: 'Youtube video/audio id' }"}</p>
+            </section>
+
+            <section className="space-y-3 mb-6">
+                <code className="text-2xl"><span className="get-method">[GET]</span> /media/related/:mediaID?token=YOUR_TOKEN</code>
+                <p>Usage: Get related content</p>
+                <p>Params:</p>
+                <p>* token: {"{ type: string, required: true, description: 'Your api token, can be created in dashboard' }"}</p>
+                <p>* mediaID: {"{ type: string, required: true, description: 'Youtube video/audio id' }"}</p>
             </section>
         </div>
     </div>
