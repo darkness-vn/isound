@@ -7,6 +7,7 @@ import { BiCopyAlt, BiRefresh } from "react-icons/bi"
 import { CiSettings, CiCircleRemove } from "react-icons/ci"
 import useDeliver from "@/hooks/deliver"
 import type { MessageInstance } from "antd/es/message/interface"
+import { useRouter } from "next/navigation"
 
 interface Props {
     messageApi: MessageInstance
@@ -23,6 +24,8 @@ function shortenString(inputString: string, maxLength: number) {
 }
 
 const TokenList: FC<Props> = ({ messageApi, data, dataLoader }) => {
+
+    const router = useRouter()
 
     const deleteToken = async (id: string) => {
 
@@ -86,7 +89,7 @@ const TokenList: FC<Props> = ({ messageApi, data, dataLoader }) => {
                     <button className="text-sky-500 flex space-x-2 items-center">
                         <BiRefresh className="text-xl text-sky-500" />
                     </button>
-                    <button className="text-sky-500 flex space-x-2 items-center">
+                    <button onClick={() => router.push(`/dashboard/update-token/${record.key}`)} className="text-sky-500 flex space-x-2 items-center">
                         <CiSettings className="text-xl text-sky-500" />
                     </button>
                     <button onClick={() => deleteToken(record.key)} className="text-sky-500 flex space-x-2 items-center">

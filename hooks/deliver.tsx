@@ -5,12 +5,24 @@ import { auth } from "@/firebase/init"
 const LOCAL_API = "http://localhost:8888"
 const PROD_API = "https://isound.cyclic.cloud"
 
+interface TokenOptions {
+    location?: string,
+    lang?: string,
+    feed?: boolean,
+    audio?: boolean,
+    video?: boolean,
+    download?: boolean
+    lyric?: boolean,
+    history?: boolean,
+    playlist?: boolean
+}
+
 export default async function useDeliver() {
 
     const tokenId = await auth.currentUser?.getIdToken()
 
     const deliverInstance = axios.create({
-        baseURL: PROD_API,
+        baseURL: LOCAL_API,
         timeout: 10000,
         headers: {
             'tokenId': tokenId,
@@ -36,21 +48,18 @@ export default async function useDeliver() {
         return data
     }
 
-    type GenerateTokenInput = {
-        tokenName: string,
-        options?: {
-            feedData: boolean,
-            mediaInfo: boolean,
-            playAudio: boolean,
-            playVideo: boolean
-            download: boolean,
-            history: boolean
-        }
+    type TokenPayload = {
+        tokenName?: string,
+        options?: TokenOptions
     }
 
-    const generateToken = async ({ tokenName, options }:GenerateTokenInput) => {
-        await deliverInstance.post(`/user/token/create-api-token`, {tokenName})
+    const generateToken = async ({ tokenName, options }: TokenPayload) => {
+        await deliverInstance.post(`/user/token/create-api-token`, { tokenName, options })
     }
 
-    return { getTokenList, getTokenDetailById, deleteTokenById, generateToken }
+    const updateToken = async (tokenId: string, payload: TokenPayload) => {
+        await deliverInstance.put(`/token/${tokenId}`, { ...payload })
+    }
+
+    return { getTokenList, getTokenDetailById, deleteTokenById, generateToken, updateToken }
 }

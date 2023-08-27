@@ -29,7 +29,7 @@ export default function RootLayout({
             Message: {
               colorText: "#FFFFFF",
               contentBg: "#292929",
-            }
+            },
           }
         }}
       >
@@ -38,10 +38,3 @@ export default function RootLayout({
     </html>
   )
 }
-/*
-components: {
-            Table: {
-              colorBgContainer: "#1B1D1E"
-            }
-          }
-*/

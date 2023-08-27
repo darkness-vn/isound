@@ -5,3 +5,7 @@
 .ant-table-thead {
     background: #000 !important;
 }
+
+.ant-switch-inner {
+    border: rgba(37, 88, 255, 0.863) solid 2px !important;
+}

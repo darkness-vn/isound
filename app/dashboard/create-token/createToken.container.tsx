@@ -1,6 +1,6 @@
 "use client"
 import { Checkbox } from 'antd'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import axios from "axios"
 import { useRouter } from 'next/navigation'
 import type { CheckboxValueType } from 'antd/es/checkbox/Group'
@@ -10,31 +10,45 @@ import PrivateRoute from '@/hooks/privateRoute'
 import { auth } from '@/firebase/init'
 import useDeliver from '@/hooks/deliver'
 
-const onChange = (checkedValues: CheckboxValueType[]) => {
-
-}
-
 const free_options = [
     { label: 'Get feed data', value: 'feed' },
-    { label: 'Get media info', value: 'info' },
-    { label: 'Play audio', value: 'play-audio' },
-    { label: 'Play video', value: 'play-video' },
+    { label: 'Play audio', value: 'audio' },
+    { label: 'Play video', value: 'video' },
     { label: 'Download', value: 'download' },
+    { label: 'Lyric', value: 'lyric' },
 ]
 
 const premium_options = [
-    { label: 'Play high quality music', value: 'hq' },
-    { label: 'Custom playlist', value: 'custom-playlist' },
-    { label: 'Play video', value: 'play-video' },
+    { label: 'Use history', value: 'history' },
+    { label: 'Custom playlist', value: 'playlist' },
 ]
 
-export function FeaturePicker() {
+interface FeaturePickerProps {
+    $freeOptions: Dispatch<SetStateAction<string[]>>
+    $premiumOptions: Dispatch<SetStateAction<string[]>>
+}
+
+export function FeaturePicker({
+    $freeOptions,
+    $premiumOptions
+}:FeaturePickerProps) {
+
+    const onChange = (group:string, values: CheckboxValueType[]) => {
+        if (group === "free") {
+            // @ts-ignore
+            $freeOptions(values)
+        } else {
+            // @ts-ignore
+            $premiumOptions(values)
+        }
+    }
+
     return <>
         <p className='mb-2 font-semibold text-gray-300'>Free features</p>
-        <Checkbox.Group options={free_options} defaultValue={['Pear']} onChange={onChange} />
+        <Checkbox.Group options={free_options} onChange={(values) => onChange("free", values)} />
 
         <p className='mt-4 mb-2 font-semibold text-gray-300'>Premium features</p>
-        <Checkbox.Group disabled options={premium_options} defaultValue={['Pear']} onChange={onChange} />
+        <Checkbox.Group disabled options={premium_options} onChange={(values) => onChange("premium", values)} />
     </>
 }
 
@@ -43,10 +57,21 @@ function CreateTokenContainer() {
     const router = useRouter()
     const [tokenName, $tokenName] = useState<string>("")
 
+    const [freeOptions, $freeOptions] = useState<Array<string>>([])
+    const [premiumOptions, $premiumOptions] = useState<Array<string>>([])
+
     const handleCreateAPIToken = async () => {
         try {
             const { generateToken } = await useDeliver()
-            await generateToken({ tokenName })
+
+            const options:{[key: string]: boolean | string} = {}
+
+            freeOptions.forEach(i => {
+                options[i] = true
+            })
+            
+            await generateToken({ tokenName, options })
+            
             router.push("/dashboard")
         } catch (err) {
 
@@ -73,7 +98,7 @@ function CreateTokenContainer() {
                 <p>The feature will be applied to your token.</p>
             </div>
             <div className="mt-4">
-                <FeaturePicker />
+                <FeaturePicker $freeOptions={$freeOptions} $premiumOptions={$premiumOptions}/>
             </div>
 
             <div className="mt-4">
