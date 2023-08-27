@@ -22,7 +22,7 @@ export default async function useDeliver() {
     const tokenId = await auth.currentUser?.getIdToken()
 
     const deliverInstance = axios.create({
-        baseURL: LOCAL_API,
+        baseURL: PROD_API,
         timeout: 10000,
         headers: {
             'tokenId': tokenId,
